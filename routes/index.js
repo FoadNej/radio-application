@@ -16,4 +16,9 @@ router.get('/slot', function(req, res, next) {
 router.get('/sound', function(req, res, next) {
   res.render('sound.html', { title: 'Express' });
 });
+
+router.get('/painting', function (req, res) {
+    res.render('index',{});
+});
+
 module.exports = router;

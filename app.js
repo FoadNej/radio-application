@@ -10,6 +10,24 @@ var users = require('./routes/users');
 
 var app = express();
 
+//Riyuchi
+
+var fs = require('fs');
+var mkdirp = require("mkdirp");
+var base64 = require('urlsafe-base64');
+var getDirName = require("path").dirname
+
+function writeFile (path, contents, cb) {
+  console.log("Save image to DB");
+  mkdirp(getDirName(path), function (err) {
+    if (err) return cb(err)
+      fs.writeFile(path, contents, cb);
+  })
+}
+
+
+
+
 
 //added for express generator socketio
 var io = require("socket.io")();
@@ -59,6 +77,111 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){
     console.log('disconnected');
   });
+  //Riyuchi
+
+  socket.on('load pictures', function(userName){
+        console.log("load picturres SERVER");
+        console.log("userName :" + userName);
+/*        Account.findOne({"username" : userName},function(err, docs){
+            socket.emit('open pictures', docs);
+        });*/
+    });
+
+    socket.on('save one data', function(userName, num, data, image, address){
+      switch(num){
+        case 1:
+/*          Account.update(
+            {username : userName},
+            {$set: {picture1: data }},
+            function(err){  if(err)  throw err; }
+          );*/
+          var A = image.split(',');
+          var img = base64.decode(A[1]);
+          writeFile("public/" + address,img,function(err){
+            if(err) throw err;
+          });
+/*          Account.update(
+            {username : userName},
+            {$set: {place1: address }},
+            function(err){  if(err)  throw err; }
+          );*/
+          break;
+        case 2:
+/*          Account.update(
+            {username : userName},
+            {$set: {picture2: data }},
+            function(err){  if(err)  throw err; }
+          );*/
+          var A = image.split(',');
+          var img = base64.decode(A[1]);
+          writeFile("public/" + address,img,function(err){
+            if(err) throw err;
+          });
+/*          Account.update(
+            {username : userName},
+            {$set: {place2: address }},
+            function(err){  if(err)  throw err; }
+          );*/
+          break;
+        case 3:
+/*          Account.update(
+            {username : userName},
+            {$set: {picture3: data }},
+            function(err){  if(err)  throw err; }
+          );*/
+          var A = image.split(',');
+          var img = base64.decode(A[1]);
+          writeFile("public/" + address,img,function(err){
+            if(err) throw err;
+          });
+/*          Account.update(
+            {username : userName},
+            {$set: {place3: address }},
+            function(err){  if(err)  throw err; }
+          );*/
+          break;
+        case 4:
+/*          Account.update(
+            {username : userName},
+            {$set: {picture4: data }},
+            function(err){  if(err)  throw err; }
+          );*/
+          var A = image.split(',');
+          var img = base64.decode(A[1]);
+          writeFile("public/" + address,img,function(err){
+            if(err) throw err;
+          });
+/*          Account.update(
+            {username : userName},
+            {$set: {place4: address }},
+            function(err){  if(err)  throw err; }
+          );*/
+          break;
+        case 5:
+/*          Account.update(
+            {username : userName},
+            {$set: {picture5: data }},
+            function(err){  if(err)  throw err; }
+          );*/
+          var A = image.split(',');
+          var img = base64.decode(A[1]);
+          writeFile("public/" + address,img,function(err){
+            if(err) throw err;
+          });
+/*          Account.update(
+            {username : userName},
+            {$set: {place5: address }},
+            function(err){  if(err)  throw err; }
+          );*/
+          break;
+      }
+    });
+
+
+
+
+
+
 });
 
 
