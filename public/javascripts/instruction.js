@@ -3,7 +3,7 @@ var Text = {
     $canvas1.drawText({
       fillStyle: "#000000",   fontSize:(1/4)*canvas1.height,    fontFamily:"Arial", layer:true,
      x:(3/20)*canvas1.width, y:(1/2)*canvas1.height,
-      text:" Select the component. ",
+      text:" Select ",
       name : "text1",
     });
   },
@@ -11,7 +11,7 @@ var Text = {
     $canvas1.drawText({
       fillStyle: "#000000",   fontSize:(1/4)*canvas1.height,    fontFamily:"Arial", layer:true,
      x:(3/20)*canvas1.width, y:(1/2)*canvas1.height,
-      text:" Touch the location. ",
+      text:" Touch",
       name : "text2",
     });
   },

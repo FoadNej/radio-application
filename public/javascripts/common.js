@@ -206,6 +206,8 @@ var stamps = function(stampNum,canvasNumber,nameNumber,x,y){
                   source:  'images/background/effel_sunny.jpg',
                   layer :true,
                 }).drawLayers();
+                clearInterval(repeat);
+                repeatFlag=0;
               }
               break;
             case 7:

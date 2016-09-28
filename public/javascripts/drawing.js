@@ -61,6 +61,12 @@ var Drawing= {
         Text.text1();
         $canvas1.moveLayer("text1" ,0);
         switch(stIndex){
+          case 1 :
+            Sound.play(0);
+          break;
+          case 2 :
+            Sound.play(0);
+          break;
           case 3 :
             Sound.play(4);
             break;
@@ -68,44 +74,27 @@ var Drawing= {
             Sound.play(5);
             break;
           case 5 :
-            if(currentBg == 5){
-              $canvas2.setLayer(bgArray[NUMofBACKGROUND],{
-                  source:  'images/background/effel_sunny.jpg',
-                  layer :true,
-              }).drawLayers();
-            Sound.play(2);
-            }
+            if(currentBg == 5)  Sound.play(2);
+            else Sound.play(0);
             break;
+          case 6 :
+            Sound.play(0);
+          break;
           case 7 :
-            if(currentBg == 5){
-              $canvas2.setLayer(bgArray[NUMofBACKGROUND],{
-                  source:  'images/background/effel_rain.jpg',
-                  layer :true,
-              }).drawLayers();
-              Sound.play(1);
-              if(repeatFlag != 7){
-                clearInterval(repeat);
-                repeat = setInterval("rain_animation()",500);
-                repeatFlag=stIndex;
-              }
-            }
+            if(currentBg == 5)  Sound.play(1);
+            else Sound.play(0);
             break;
           case 8 :
-            if(currentBg == 5){
-              $canvas2.setLayer(bgArray[NUMofBACKGROUND],{
-                  source:  'images/background/effel-snow.jpg',
-                  layer :true,
-              }).drawLayers();
-              Sound.play(3);
-              if(repeatFlag != 8){
-                clearInterval(repeat);
-                repeat = setInterval("snow_animation()",500);
-                repeatFlag=stIndex;
-              }
-            }
+            if(currentBg == 5) Sound.play(3);
+            else Sound.play(0);
             break;
-          default:
+          case 9 :
             Sound.play(0);
+          break;
+          case 10 :
+            Sound.play(0);
+          break;
+          default:
             break;
         };
       }

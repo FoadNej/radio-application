@@ -14,7 +14,7 @@ video.removeAttribute("poster");
 function playVid(index) {
  video_links.children[index].classList.add("currentvid");
     
-	source[0].src = vidDir + link_list[index] + ".mp4";
+	source[0].src = vidDir + link_list[index] + ".webm";
     currentVid = index;
     video.load();
 	video.play();
