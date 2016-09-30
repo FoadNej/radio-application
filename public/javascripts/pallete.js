@@ -135,6 +135,9 @@ var Circle = {
 
         if(ClickCount>=3){
           console.log("You got coin!!");
+          $.get( "http://127.0.0.1:8082/command?action=dispense&coinNo=1", function( data ) {
+          //$( ".result" ).html( data );
+          });
           console.log("The sum of ClickCount is " + ClickCount);
           ClickCount=0;
         }
@@ -159,12 +162,35 @@ var Circle = {
         imgArray[galleryNumber].src = canvas2.toDataURL('image/png');
         if(ClickCount>=3){
           console.log("You've got coin!!");
+          $.get( "http://127.0.0.1:8082/command?action=dispense&coinNo=1", function( data ) {
+          //$( ".result" ).html( data );
+          });
           console.log("The sum of ClickCount is " + ClickCount);
           ClickCount=0;
         }
       },
     });
   },
+  back: function(x,y){
+    $canvas =$canvas1;
+    canvas = canvas1;
+    $canvas.drawImage({
+      source: 'images/back2.png',  layer:true,
+      x: x, y: y,
+      width:(1/30)*canvas.width, height: canvas.height,
+      fromCenter: false,  draggable:false,
+      click : function(){
+        Sound.play(0);
+        writeLog(8);
+        window.location.href = "/";
+      },
+      touchend : function(){
+        Sound.play(0);
+        writeLog(8);
+        window.location.href= "/";
+      },
+    });
+  }
 }
 
 var requestAnimationFrame = ( function(){
@@ -211,34 +237,9 @@ var requestAnimationFrame = ( function(){
   }
 
 
-function initPosition(){
+function initPositionForCanvas3(){
   var i = 0;
   Canvasclear.all(3);
-  if((canvas1.width/(NUMofCOLOR + NUMofDRAWINGSTYLE + NUMofFUNCTION)) >= (1/4)*canvas1.height){
-    for(i=0;i<(NUMofCOLOR + NUMofDRAWINGSTYLE + NUMofFUNCTION);i++){
-      cirArrayX[i] = canvas1.width - ((canvas1.width/((NUMofCOLOR + NUMofDRAWINGSTYLE + NUMofFUNCTION)*2)) * ((2*i)+1))*(3/4);
-    }
-  }else{
-    for(i=0;i<(NUMofCOLOR + NUMofDRAWINGSTYLE + NUMofFUNCTION);i++){
-      cirArrayX[i] = canvas1.width - (((1/4)*canvas1.height) * ((2*i)+1))*(3/4);
-    }
-  }
-  Circle.paint(cirArrayX[0],(1/2)*canvas1.height+10, "#DF0101");
-  Circle.paint(cirArrayX[1],(1/2)*canvas1.height+10, "#FF8000");
-  Circle.paint(cirArrayX[2],(1/2)*canvas1.height+10, "#FFFF00");
-  Circle.paint(cirArrayX[3],(1/2)*canvas1.height+10, "#40FF00");
-  Circle.paint(cirArrayX[4],(1/2)*canvas1.height+10, "#0000FF");
-  Circle.paint(cirArrayX[5],(1/2)*canvas1.height+10, "#FF00BF");
-  Circle.paint(cirArrayX[6],(1/2)*canvas1.height+10, "#000000");
-  Circle.paint(cirArrayX[7],(1/2)*canvas1.height+10, "#F2F2F2");
-  Circle.thickness(10,cirArrayX[8],(1/2)*canvas1.height+10,(3/16)*canvas1.height);
-  Circle.thickness(20,cirArrayX[9],(1/2)*canvas1.height+10,(4/16)*canvas1.height);
-  Circle.thickness(30,cirArrayX[10],(1/2)*canvas1.height+10,(5/16)*canvas1.height);
-  Circle.save(cirArrayX[11],(1/2)*canvas1.height);
-  Circle.undo(cirArrayX[12],(1/2)*canvas1.height);
-  Text.text3(cirArrayX[9],(1/2)*canvas1.height-30);
-  Text.text4(cirArrayX[3],(1/2)*canvas1.height-30);
-
 
   if((canvas3.width/NUMofSTAMP) > (1/2)*canvas3.height){
     for(i=0; i < NUMofSTAMP; i++){
@@ -277,11 +278,11 @@ $(function(){
   function sizing() {
     canvas3.height = (6/30)*container.offsetHeight;
     canvas3.width = container.offsetWidth;
-    initPosition();
+    initPositionForCanvas3();
 
     for(var i=0; i<5;i++){
       $picture[i].css("left", $gallery.width()*(0/6));
-      $picture[i].css("top", $gallery.height()*(((4*i)+1)/20));
+      $picture[i].css("top", $gallery.height()*(((15*i)+3)/80));
       $picture[i].css("width", $gallery.width()*(3/4)+ 'px');
       $picture[i].css("height", $gallery.height()*(1/7)+ 'px');
       if(imgArray[i] != null){
@@ -309,7 +310,7 @@ $(function(){
   stArray = ["stamp1_0","stamp2_1","stamp3_2","stamp4_3","stamp5_4",];
   bgArray = ["view1_0","view2_1","view3_2","view4_3","view5_4","view6_5","view7_6","view8_7","view9_8","view10_9"];
 
-  initPosition();
+ // initPosition();
 
 });
 

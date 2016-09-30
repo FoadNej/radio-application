@@ -58,6 +58,8 @@ $(function(){
         $picture[i] = $('#picture' + (i+1));
     }
 
+    writeLog(9,userName);
+
  });
 
 // canvasClear is an object for clear the canvas.

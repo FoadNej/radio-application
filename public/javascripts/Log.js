@@ -42,6 +42,12 @@ function writeLog( id , data1, data2){
             case 7:
                 tempLog[time] = " saving " + data1;
             break;
+            case 8:
+                tempLog[time] = " back to the main page ";
+            break;
+            case 9:
+                tempLog[time] = data1 + " start playing the app ";
+            break;
         }
     }
 }
