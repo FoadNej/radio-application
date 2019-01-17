@@ -79,4 +79,18 @@ if (index) {
  }
 });
 
+
+ var socket = io();
+        socket.connect('http://127.0.0.1:3000');
+        socket.emit('home load', {room: 'home', code: 'print 3'});
+        socket.on('welcome', function(msg){
+            console.log(msg);
+            $( "#welcome" ).html( "Welcome " + msg.name );
+            //letspin();
+        });
+
+        socket.on('redirect', function(destination) {
+            window.location.href = destination;
+        });
+
 })();

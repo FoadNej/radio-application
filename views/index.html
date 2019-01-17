@@ -24,6 +24,10 @@
   display: table-cell;
   vertical-align: top; 
 }
+#welcome { 
+  color: red; 
+  text-indent: 10px;
+}
 #video_container video { 
   position: absolute; 
   display: block;
@@ -53,14 +57,15 @@
 
     </style>
 
-    
+        <script src='/javascripts/jqdoyekse.js'></script>
+        <script src="/socket.io/socket.io.js"></script>
         <script src="/javascripts/prefixfree.min.js"></script>
 
     
   </head>
 
   <body>
-
+ <h2 id="welcome">Welcome Guest</h2>
     <figure id="video_player">
   <div id="video_container">
   <video controls poster="/images/butterfly.png" autoplay>
@@ -90,21 +95,53 @@
 
          <div class="row">
 
-         <div class="col-lg-2">
+         <div class="col-lg-3">
           
         </div><!-- /.col-lg-4 -->
 
-        <div class="col-lg-4">
+        <div class="col-lg-6">
+
+        <div class="col-lg-2">
           <img class="img-circle" src="/images/painting.png" alt="Generic placeholder image" width="140" height="140">
           <h2>  </h2>
           <p><a class="btn btn-default text-center" href="/painting" role="button">  Painting  </a></p>
         </div><!-- /.col-lg-4 -->
-        <div class="col-lg-6">
+        <div class="col-lg-2">
           <img class="img-circle" src="/images/slot.jpg" width="140" height="140">
           <h2>   </h2>
           
           <p><a class="btn btn-default" href="/slot" role="button">Slot Machine</a></p>
         </div><!-- /.col-lg-4 -->
+        <div class="col-lg-2">
+          <img class="img-circle" src="/picture/whack/basicmole.png" width="140" height="140">
+          <h2>   </h2>
+          
+          <p><a class="btn btn-default" href="/whackm" role="button">Whack A Mole</a></p>
+        </div>
+
+        <div class="col-lg-2">
+          <img class="img-circle" src="/picture/slider/slider.jpeg" width="140" height="140">
+          <h2>   </h2>
+          
+          <p><a class="btn btn-default" href="/slider" role="button">Memory Swipe</a></p>
+        </div> 
+
+        <div class="col-lg-2">
+          <img class="img-circle" src="/picture/drum/drum.png" width="140" height="140">
+          <h2>   </h2>
+          
+          <p><a class="btn btn-default" href="/drum" role="button">Play Drums</a></p>
+        </div>
+
+        <div class="col-lg-2">
+          <img class="img-circle" src="/picture/vr/venice.jpg" width="140" height="140">
+          <h2>   </h2>
+          
+          <p><a class="btn btn-default" href="/vr" role="button">Go To Venice</a></p>
+        </div>
+        
+        </div>
+
       </div><!-- /.row -->
     
   </body>

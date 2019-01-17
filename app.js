@@ -17,6 +17,9 @@ var mkdirp = require("mkdirp");
 var base64 = require('urlsafe-base64');
 var getDirName = require("path").dirname
 
+
+var present_route = '';
+
 function writeFile (path, contents, cb) {
   console.log("Save image to DB");
   mkdirp(getDirName(path), function (err) {
@@ -40,142 +43,59 @@ io.on('connection', function(socket){
     if (error) throw error;
     console.log(clients); // => [6em3d4TJP8Et9EMNAAAA, G5p55dHhGgUnLUctAAAB]
   });
-  //
-  //socket.emit('rasp connect', { some: 'data' });
-  //console.log('connected');
-  //raspberry introduces itself, and is joined to a room with its id
-  socket.on('slot load', function(data){
-    socket.join(data.raspID);
-    console.log(data.raspID);
-    console.log('joined');
+
+
+  socket.on('home load', function(data){
+    socket.join(data.room);
+    console.log(data.room);
+    console.log('joined home room');
 
   });
 
 
-  //event received from browser, and send to the room with the raspID (obtained from database)
-  socket.on('lever down', function(data){
-    console.log(data);
-    console.log(data.raspID);
-    socket.join(data.raspID);
-    io.to(data.raspID).emit('spin', { strength: data.strength });
-    //socket.broadcast.to(data.raspID).emit("boro",data);
-
-  });
 
 
-//event received from raspberry(console log), and send to the browser, this needs to be optimized
-  socket.on('log', function(data){
-    console.log(data);
-    console.log(data.raspID);
-    socket.join(data.raspID);
-    io.to(data.raspID).emit('update log', { log: data.log });
-    //socket.broadcast.to(data.raspID).emit("boro",data);
 
-  });
+
 
 
   socket.on('disconnect', function(){
     console.log('disconnected');
   });
-  //Riyuchi
 
-  socket.on('load pictures', function(userName){
-        console.log("load picturres SERVER");
-        console.log("userName :" + userName);
-/*        Account.findOne({"username" : userName},function(err, docs){
-            socket.emit('open pictures', docs);
-        });*/
-    });
 
-    socket.on('save one data', function(userName, num, data, image, address){
-      switch(num){
-        case 1:
-/*          Account.update(
-            {username : userName},
-            {$set: {picture1: data }},
-            function(err){  if(err)  throw err; }
-          );*/
-          var A = image.split(',');
-          var img = base64.decode(A[1]);
-          writeFile("public/" + address,img,function(err){
-            if(err) throw err;
-          });
-/*          Account.update(
-            {username : userName},
-            {$set: {place1: address }},
-            function(err){  if(err)  throw err; }
-          );*/
-          break;
-        case 2:
-/*          Account.update(
-            {username : userName},
-            {$set: {picture2: data }},
-            function(err){  if(err)  throw err; }
-          );*/
-          var A = image.split(',');
-          var img = base64.decode(A[1]);
-          writeFile("public/" + address,img,function(err){
-            if(err) throw err;
-          });
-/*          Account.update(
-            {username : userName},
-            {$set: {place2: address }},
-            function(err){  if(err)  throw err; }
-          );*/
-          break;
-        case 3:
-/*          Account.update(
-            {username : userName},
-            {$set: {picture3: data }},
-            function(err){  if(err)  throw err; }
-          );*/
-          var A = image.split(',');
-          var img = base64.decode(A[1]);
-          writeFile("public/" + address,img,function(err){
-            if(err) throw err;
-          });
-/*          Account.update(
-            {username : userName},
-            {$set: {place3: address }},
-            function(err){  if(err)  throw err; }
-          );*/
-          break;
-        case 4:
-/*          Account.update(
-            {username : userName},
-            {$set: {picture4: data }},
-            function(err){  if(err)  throw err; }
-          );*/
-          var A = image.split(',');
-          var img = base64.decode(A[1]);
-          writeFile("public/" + address,img,function(err){
-            if(err) throw err;
-          });
-/*          Account.update(
-            {username : userName},
-            {$set: {place4: address }},
-            function(err){  if(err)  throw err; }
-          );*/
-          break;
-        case 5:
-/*          Account.update(
-            {username : userName},
-            {$set: {picture5: data }},
-            function(err){  if(err)  throw err; }
-          );*/
-          var A = image.split(',');
-          var img = base64.decode(A[1]);
-          writeFile("public/" + address,img,function(err){
-            if(err) throw err;
-          });
-/*          Account.update(
-            {username : userName},
-            {$set: {place5: address }},
-            function(err){  if(err)  throw err; }
-          );*/
-          break;
-      }
-    });
+ 
+
+
+
+
+
+
+
+
+socket.on('wheel start', function(data){
+    socket.join(data.chatroom);
+    console.log('joined');
+
+  });
+
+ socket.on('wheel left', function(data){
+    socket.join(data.chatroom);
+    io.to(data.chatroom).emit('wheel left', { sliderPos: data.sliderPos });
+    console.log(data);
+    
+
+  });
+
+ socket.on('wheel right', function(data){
+    socket.join(data.chatroom);
+    io.to(data.chatroom).emit('wheel right', { sliderPos: data.sliderPos });
+    console.log(data);
+   
+   
+  });
+
+
 
 
 
@@ -205,9 +125,20 @@ app.set('view engine', 'pug');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+//IMPORTANT GOLD SOLUTION for using socket in REST router
+app.use(function(req, res, next) {
+  req.io = io;
+  next();
+ 
+});
+
+
 
 app.use('/', routes);
 app.use('/users', users);
@@ -232,6 +163,21 @@ if (app.get('env') === 'development') {
     });
   });
 }
+
+var exec = require('child_process').exec;
+app.post('/api/configurewifi', function(req, res) {
+    var ssid = req.body.ssid;
+    var pass = req.body.pass;
+    console.log(ssid);
+    var cmd = 'ifconfig';
+    exec(cmd, function(error, stdout, stderr) {
+    console.log(stdout);
+    });
+
+    console.log("resid be post");
+    res.send(ssid + ' ' + pass + ' ');
+});
+
 
 // production error handler
 // no stacktraces leaked to user

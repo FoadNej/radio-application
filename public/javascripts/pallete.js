@@ -135,7 +135,7 @@ var Circle = {
 
         if(ClickCount>=3){
           console.log("You got coin!!");
-          $.get( "http://127.0.0.1:8082/command?action=dispense&coinNo=1", function( data ) {
+          $.get( "http://192.168.42.1:8082/command?action=dispense&coinNo=1", function( data ) {
           //$( ".result" ).html( data );
           });
           console.log("The sum of ClickCount is " + ClickCount);
@@ -162,7 +162,7 @@ var Circle = {
         imgArray[galleryNumber].src = canvas2.toDataURL('image/png');
         if(ClickCount>=3){
           console.log("You've got coin!!");
-          $.get( "http://127.0.0.1:8082/command?action=dispense&coinNo=1", function( data ) {
+          $.get( "http://192.168.42.1:8082/command?action=dispense&coinNo=1", function( data ) {
           //$( ".result" ).html( data );
           });
           console.log("The sum of ClickCount is " + ClickCount);
